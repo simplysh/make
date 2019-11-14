@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
   // create the font
   const std::string textSource = "BalooBhaina-Regular.ttf";
   const std::string textMessage = "You're all set! :)";
-  SDL_Color white = { 255, 255, 255 };
+  SDL_Color white = { 249, 251, 231 };
 
   TTF_Font* font = TTF_OpenFont(textSource.c_str(), width / 10);
   if (!font) {
@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
   bool running = true;
   SDL_Event event;
 
-  SDL_SetRenderDrawColor(renderTarget, 132, 63, 91, 255);
+  SDL_SetRenderDrawColor(renderTarget, 173, 20, 87, 255);
 
   while (running) {
     while (SDL_PollEvent(&event) != 0) {
