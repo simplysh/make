@@ -1,4 +1,4 @@
-app = sample
+program = sample
 
 # shell
 rm = $(if $(filter $(OS),Windows_NT),del /Q,rm -fv)
@@ -7,7 +7,7 @@ cp = $(if $(filter $(OS),Windows_NT),copy,cp)
 # compiler
 cxx = g++
 cxxflags = -std=c++14 -pedantic-errors
-out = $(if $(filter $(OS),Windows_NT),.\$(app).exe,./$(app))
+out = $(if $(filter $(OS),Windows_NT),.\$(program).exe,./$(program))
 dest = $(if $(filter $(OS),Windows_NT),$(shell echo %SYSTEMROOT%),/usr/local/bin)
 src = $(wildcard ./*.cpp)
 obj = $(src:.cpp=.o)
