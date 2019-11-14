@@ -1,7 +1,7 @@
 program = sample
 
 # config
-#sdlprefix = C:\libsdl
+sdlprefix = C:\libsdl
 
 # shell
 rm = $(if $(filter $(OS),Windows_NT),del /Q,rm -f)
