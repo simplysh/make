@@ -30,7 +30,7 @@ main.o: main.cpp
 	$(cxx) -c $(cxxflags) $(winflags) $< -o $@
 
 clean:
-	$(rm) *.o *.exe
+	$(rm) *.o $(out)
 
 install:
 	@echo installing to $(dest)
