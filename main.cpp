@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
   }
 
   // create the window and surfaces
-  window = SDL_CreateWindow("Universal Make " VERSION, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
+  window = SDL_CreateWindow("Simple Make " VERSION, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
   screen = SDL_GetWindowSurface(window);
   renderTarget = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
