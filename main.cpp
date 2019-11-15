@@ -12,24 +12,26 @@ int main(int argc, char* argv[]) {
   const int width = 1920 / 3;
   const int height = 1080 / 3;
 
-  SDL_Window* window = NULL;
-  SDL_Surface* screen = NULL;
-  SDL_Renderer* renderTarget = NULL;
-  SDL_DisplayMode displayMode;
-
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
     std::cout << "Can't initialize SDL: " << SDL_GetError() << std::endl;
     return 1;
   }
 
+  SDL_Window* window = NULL;
+  SDL_Renderer* renderTarget = NULL;
+  SDL_DisplayMode displayMode;
+
   // create the window and surfaces
   window = SDL_CreateWindow("Simple Make " VERSION, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
-  screen = SDL_GetWindowSurface(window);
   renderTarget = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-  // initialise stuff
+  // initialise stuff and check for errors
   if (window == NULL) {
     std::cout << "Can't draw window: " << SDL_GetError() << std::endl;
+    return 1;
+  }
+  if (renderTarget == NULL) {
+    std::cout << "Can't initialise renderer: " << SDL_GetError() << std::endl;
     return 1;
   }
   if (TTF_Init() < 0) {
@@ -37,7 +39,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
   const int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
-  if (!IMG_Init(imgFlags) & imgFlags) {
+  if (!(IMG_Init(imgFlags) & imgFlags)) {
     std::cout << "Can't initialize IMG: " << IMG_GetError() << std::endl;
     return 1;
   }
@@ -87,10 +89,10 @@ int main(int argc, char* argv[]) {
     SDL_RenderPresent(renderTarget);
   }
 
-  SDL_DestroyWindow(window);
-  SDL_DestroyRenderer(renderTarget);
-
   SDL_DestroyTexture(textTexture);
+
+  SDL_DestroyRenderer(renderTarget);
+  SDL_DestroyWindow(window);
 
   IMG_Quit();
   TTF_Quit();
