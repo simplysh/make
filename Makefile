@@ -27,11 +27,12 @@ endif
 # compiler
 cxx := g++
 cxxflags := -std=c++14 -pedantic-errors
+varflags = -DVERSION="\"$(shell $(cat) VERSION)\""
 out := $(if $(filter $(OS),Windows_NT),.\$(program).exe,./$(program))
 dest := $(if $(filter $(OS),Windows_NT),$(shell echo %SYSTEMROOT%),/usr/local/bin)
 src := $(wildcard $(srcprefix)/*.cpp)
 obj := $(src:$(srcprefix)/%.cpp=./%.o)
-flags := $(cxxflags) $(winflags) -DVERSION="\"$(shell $(cat) VERSION)\""
+flags := $(cxxflags) $(winflags)
 
 all: $(out)
 	@echo success!
@@ -40,10 +41,10 @@ $(out): $(obj)
 	$(cxx) $(flags) $^ $(sdlflags) -o $@
 
 main.o: $(srcprefix)/main.cpp
-	$(cxx) -c $(flags) $(srcprefix)/main.cpp $(sdlflags) -o main.o
+	$(cxx) -c $(flags) $(varflags) $(srcprefix)/main.cpp -o main.o
 
 ./%.o: $(srcprefix)/%.cpp $(srcprefix)/%.h
-	$(cxx) -c $(flags) $< $(sdlflags) -o $@
+	$(cxx) -c $(flags) $< -o $@
 
 .PHONY: clean
 clean:
