@@ -2,6 +2,7 @@ program = sample
 
 # config
 sdlprefix = C:\libsdl
+srcprefix = ./src
 
 # shell
 rm = $(if $(filter $(OS),Windows_NT),del /Q,rm -f)
@@ -28,24 +29,27 @@ cxx = g++
 cxxflags = -std=c++14 -pedantic-errors
 out = $(if $(filter $(OS),Windows_NT),.\$(program).exe,./$(program))
 dest = $(if $(filter $(OS),Windows_NT),$(shell echo %SYSTEMROOT%),/usr/local/bin)
-src = $(wildcard ./*.cpp)
-obj = $(src:.cpp=.o)
+src = $(wildcard $(srcprefix)/*.cpp)
+obj = $(src:$(srcprefix)/%.cpp=./%.o)
 flags = $(cxxflags) $(winflags) -DVERSION="\"$(shell $(cat) VERSION)\""
 
 all: $(out)
+	@echo success!
 
 $(out): $(obj)
 	$(cxx) $(flags) $^ $(sdlflags) -o $@
 
-main.o: main.cpp
-	$(cxx) -c $(flags) main.cpp $(sdlflags) -o main.o
+main.o: $(srcprefix)/main.cpp
+	$(cxx) -c $(flags) $(srcprefix)/main.cpp $(sdlflags) -o main.o
 
-./%.o: ./%.cpp ./%.h
+./%.o: $(srcprefix)/%.cpp $(srcprefix)/%.h
 	$(cxx) -c $(flags) $< $(sdlflags) -o $@
 
+.PHONY: clean
 clean:
 	$(rm) *.o $(out)
 
+.PHONY: install
 install:
 	@echo installing to $(dest)
 	$(cp) $(out) $(dest)
