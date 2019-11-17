@@ -1,8 +1,8 @@
 program = sample
 
 # config
-sdlprefix := C:\libsdl
 srcprefix := ./src
+sdlprefix := C:\libsdl
 
 # shell
 rm := $(if $(filter $(OS),Windows_NT),del /Q,rm -f)
