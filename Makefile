@@ -45,7 +45,7 @@ all: $(out)
 $(out): $(obj)
 	$(cxx) $(flags) $^ $(sdlflags) -o $@
 
-main.o: $(srcprefix)/main.cpp VERSION
+main.o: $(srcprefix)/main.cpp
 	$(cxx) -c $(cxxflags) $(varflags) $(srcprefix)/main.cpp -o main.o
 
 ./%.o: $(srcprefix)/%.cpp $(srcprefix)/%.h
