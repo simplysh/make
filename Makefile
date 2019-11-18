@@ -24,6 +24,11 @@ ifeq ($(filter $(OS),Windows_NT), Windows_NT)
 	endif
 endif
 
+# linux-only
+ifeq ($(shell uname -s), Linux)
+	linuxflags := -no-pie
+endif
+
 # compiler
 cxx := g++
 cxxflags := -std=c++14 -pedantic-errors
@@ -32,7 +37,7 @@ out := $(if $(filter $(OS),Windows_NT),.\$(program).exe,./$(program))
 dest := $(if $(filter $(OS),Windows_NT),$(shell echo %SYSTEMROOT%),/usr/local/bin)
 src := $(wildcard $(srcprefix)/*.cpp)
 obj := $(src:$(srcprefix)/%.cpp=./%.o)
-flags := $(cxxflags) $(winflags)
+flags := $(cxxflags) $(winflags) $(linuxflags)
 
 all: $(out)
 	@echo success!
@@ -41,10 +46,10 @@ $(out): $(obj)
 	$(cxx) $(flags) $^ $(sdlflags) -o $@
 
 main.o: $(srcprefix)/main.cpp
-	$(cxx) -c $(flags) $(varflags) $(srcprefix)/main.cpp -o main.o
+	$(cxx) -c $(cxxflags) $(varflags) $(srcprefix)/main.cpp -o main.o
 
 ./%.o: $(srcprefix)/%.cpp $(srcprefix)/%.h
-	$(cxx) -c $(flags) $< -o $@
+	$(cxx) -c $(cxxflags) $< -o $@
 
 .PHONY: clean
 clean:
