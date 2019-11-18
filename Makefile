@@ -55,6 +55,10 @@ main.o: $(srcprefix)/main.cpp VERSION
 clean:
 	$(rm) *.o $(out)
 
+.PHONY: run
+run:
+	$(out)
+
 .PHONY: install
 install:
 	@echo installing to $(dest)
