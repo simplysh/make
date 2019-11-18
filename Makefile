@@ -25,7 +25,7 @@ ifeq ($(filter $(OS),Windows_NT), Windows_NT)
 endif
 
 # linux-only
-ifeq ($(shell uname -s), Linux)
+ifeq ($(shell uname -s 2>&1), Linux)
 	linuxflags := -no-pie
 endif
 
