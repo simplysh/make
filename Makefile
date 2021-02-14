@@ -2,7 +2,7 @@ program = sample
 
 # config
 srcprefix := ./src
-sdlprefix := C:\libsdl
+sdlenabled := 1
 
 # shell
 rm := $(if $(filter $(OS),Windows_NT),del /Q,rm -f)
@@ -10,7 +10,7 @@ cp := $(if $(filter $(OS),Windows_NT),copy,cp)
 cat := $(if $(filter $(OS),Windows_NT),type,cat)
 
 # sdl
-ifdef sdlprefix
+ifdef sdlenabled
 	sdllibs := -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
 	sdlflags := $(sdllibs)
 endif
@@ -19,8 +19,8 @@ endif
 ifeq ($(filter $(OS),Windows_NT), Windows_NT)
 	winflags := -static-libgcc -static-libstdc++
 
-	ifdef sdlprefix
-		sdlflags := -I${sdlprefix}\include\SDL2 -L${sdlprefix}\lib -lmingw32 $(sdllibs) -mwindows
+	ifdef sdlenabled
+		sdlflags := -lmingw32 $(sdllibs) -mwindows
 	endif
 endif
 
