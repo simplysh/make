@@ -56,7 +56,7 @@ clean:
 	$(rm) *.o $(out)
 
 .PHONY: run
-run:
+run: $(out)
 	$(out)
 
 .PHONY: install
